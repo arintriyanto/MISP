@@ -87,10 +87,10 @@ MISPvars () {
   alias checkAptLock="echo 'Function used in Installer to make sure apt is not locked'"
 
   # php.ini configuration
-  upload_max_filesize=50M
-  post_max_size=50M
-  max_execution_time=300
-  memory_limit=512M
+  # upload_max_filesize=50M
+  # post_max_size=50M
+  # max_execution_time=300
+  # memory_limit=512M
 
   CAKE="$PATH_TO_MISP/app/Console/cake"
 
@@ -319,6 +319,7 @@ installCake_RHEL ()
   # If you have not yet set a timezone in php.ini
   echo 'date.timezone = "Asia/Jakarta"' |sudo tee /etc/opt/rh/rh-php72/php-fpm.d/timezone.ini
   sudo ln -s ../php-fpm.d/timezone.ini /etc/opt/rh/rh-php72/php.d/99-timezone.ini
+
 
   # Recommended: Change some PHP settings in /etc/opt/rh/rh-php72/php.ini
   # max_execution_time = 300
