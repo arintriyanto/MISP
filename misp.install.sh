@@ -150,7 +150,6 @@ yumInstallCoreDeps () {
                    rh-php72-php-mbstring \
                    rh-php72-php-xml \
                    rh-php72-php-intl \
-                   rh-php72-php-ssdeep \
                    rh-php72-php-bcmath \
                    rh-php72-php-opcache \
                    rh-php72-php-gd -y
