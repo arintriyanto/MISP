@@ -9,9 +9,11 @@ export MISP_LIVE='1'
 export DBHOST='localhost'
 export DBNAME='misp'
 export DBUSER_ADMIN='root'
-export DBPASSWORD_ADMIN="$(openssl rand -hex 32)"
+#export DBPASSWORD_ADMIN="$(openssl rand -hex 32)"
+export DBPASSWORD_ADMIN="0987890"
 export DBUSER_MISP='misp'
-export DBPASSWORD_MISP="$(openssl rand -hex 32)"
+#export DBPASSWORD_MISP="$(openssl rand -hex 32)"
+export DBPASSWORD_MISP="0987890"
 # change SSL section to match YOUR company
 export OPENSSL_CN=$FQDN
 export OPENSSL_C='LU'
