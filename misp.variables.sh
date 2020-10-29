@@ -30,7 +30,7 @@ alias checkAptLock="echo 'Function used in Installer to make sure apt is not loc
 export upload_max_filesize=100M
 export post_max_size=100M
 export max_execution_time=300
-export memory_limit=3072M
+export memory_limit=4096M
 export CAKE="$PATH_TO_MISP/app/Console/cake"
 echo "Misp User: $MISP_USER"
 echo "Misp User Password: $MISP_PASSWORD"

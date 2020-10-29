@@ -137,7 +137,9 @@ yumInstallCoreDeps () {
 
   # Enable and start redis
   sudo systemctl enable --now rh-redis32-redis.service
-
+  
+  WWW_USER="apache"
+  SUDO_WWW="sudo -H -u $WWW_USER"
   RUN_PHP="/usr/bin/scl enable rh-php72"
   PHP_INI="/etc/opt/rh/rh-php72/php.ini"
   # Install PHP 7.2 from SCL, see https://www.softwarecollections.org/en/scls/rhscl/rh-php72/
@@ -163,9 +165,13 @@ yumInstallCoreDeps () {
 # <snippet-begin 1_mispCoreInstall_RHEL.sh>
 installCoreRHEL () {
   # Download MISP using git in the /var/www/ directory.
-  sudo mkdir $PATH_TO_MISP
-  sudo chown $WWW_USER:$WWW_USER $PATH_TO_MISP
-  cd /var/www
+  #sudo mkdir $PATH_TO_MISP
+  #sudo chown $WWW_USER:$WWW_USER $PATH_TO_MISP
+  #cd /var/www
+  sudo mkdir -p $(dirname $PATH_TO_MISP)
+  sudo chown $WWW_USER:$WWW_USER $(dirname $PATH_TO_MISP)
+  cd $(dirname $PATH_TO_MISP)
+
   $SUDO_WWW git clone https://github.com/MISP/MISP.git
   cd $PATH_TO_MISP
   ##$SUDO_WWW git checkout tags/$(git describe --tags `git rev-list --tags --max-count=1`)
@@ -298,6 +304,10 @@ installCake_RHEL ()
   sudo scl enable rh-php72 'yes no|pecl install redis'
   echo "extension=redis.so" |sudo tee /etc/opt/rh/rh-php72/php-fpm.d/redis.ini
   sudo ln -s /etc/opt/rh/rh-php72/php-fpm.d/redis.ini /etc/opt/rh/rh-php72/php.d/99-redis.ini
+  
+  sudo ln -s /usr/lib64/libfuzzy.so /usr/lib/libfuzzy.so
+  sudo scl enable rh-php72 'pecl install ssdeep'
+  echo "extension=ssdeep.so" |sudo tee /etc/opt/rh/rh-php72/php.d/99-ssdeep.ini
 
   # Install gnupg extension
   sudo yum install gpgme-devel -y
@@ -613,7 +623,7 @@ mispmodulesRHEL () {
   sudo chmod 2777 /usr/local/src
   sudo chown root:users /usr/local/src
   cd /usr/local/src/
-  $SUDO_WWW git clone https://github.com/MISP/misp-modules.git
+  false; while [[ $? -ne 0 ]]; do $SUDO_WWW git clone https://github.com/MISP/misp-modules.git; done
   cd misp-modules
   # pip install
   $SUDO_WWW $PATH_TO_MISP/venv/bin/pip install -U -I -r REQUIREMENTS
@@ -626,8 +636,8 @@ mispmodulesRHEL () {
 
   [Service]
   Type=simple
-  User=apache
-  Group=apache
+  User=$WWW_USER
+  Group=$WWW_USER
   WorkingDirectory=/usr/local/src/misp-modules
   Environment="PATH=/var/www/MISP/venv/bin"
   ExecStart=\"${PATH_TO_MISP}/venv/bin/misp-modules -l 127.0.0.1 -s\"
@@ -682,6 +692,7 @@ mispmodulesRHEL () {
   $SUDO_WWW $RUN_PHP -- $CAKE Admin setSetting "Plugin.Export_timeout" 300
   $SUDO_WWW $RUN_PHP -- $CAKE Admin setSetting "Plugin.Export_pdfexport_enabled" true
 }
+
 # <snippet-end 3_misp-modules_RHEL.sh>
 
 # <snippet-begin 2_core-cake.sh>
@@ -917,6 +928,9 @@ mispDashboard () {
 }
 # <snippet-end 4_misp-dashboardRHEL.sh>
 
+
+#### Start Exec ###
+
 # Enable ssh in firewall
 firewall-cmd --zone=public --add-port=22/tcp --permanent
 firewall-cmd --reload
@@ -931,7 +945,7 @@ sudo yum install neovim -y
 
 # In case you time is wrong, this will fix it.
 sudo yum install ntpdate -y
-sudo ntpdate pool.ntp.org
+sudo ntpdate 0.id.pool.ntp.org
 
 # <snippet-begin 0_yumInstallHaveged.sh>
 # GPG needs lots of entropy, haveged provides entropy
@@ -955,7 +969,9 @@ configWorkersRHEL
 mispmodulesRHEL
 coreCAKE
 updateGOWNT
-mispDashboard
+
+# To Do Fix
+# mispDashboard
 
 # If you have installed the recommended Python 3 virtualenv to the recommended place of ${PATH_TO_MISP}/venv set the following MISP configurable 
 sudo -u apache $RUN_PHP "$CAKE Admin setSetting "MISP.python_bin" "${PATH_TO_MISP}/venv/bin/python""
