@@ -58,11 +58,11 @@ MISPvars () {
   DBHOST='localhost'
   DBNAME='misp'
   DBUSER_ADMIN='root'
-  #DBPASSWORD_ADMIN="$(openssl rand -hex 32)"
-   DBPASSWORD_ADMIN="0987890"
+  DBPASSWORD_ADMIN="$(openssl rand -hex 32)"
+  #DBPASSWORD_ADMIN="0987890"
   DBUSER_MISP='misp'
-  #DBPASSWORD_MISP="$(openssl rand -hex 32)"
-  DBPASSWORD_MISP="0987890"
+  DBPASSWORD_MISP="$(openssl rand -hex 32)"
+  #DBPASSWORD_MISP="0987890"
 
   # OpenSSL configuration
   OPENSSL_CN=$FQDN
@@ -378,7 +378,7 @@ prepareDB_RHEL () {
   #if [[ ! -e /var/opt/rh/rh-mariadb102/lib/mysql/misp/users.ibd ]]; then
 
   # Add your credentials if needed, if sudo has NOPASS, comment out the relevant lines
-  pw=""
+  pw="0987890"
 
   expect -f - <<-EOF
     set timeout 10
