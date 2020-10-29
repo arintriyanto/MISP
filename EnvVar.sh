@@ -76,7 +76,7 @@ MISPvars () {
   upload_max_filesize=50M
   post_max_size=50M
   max_execution_time=300
-  memory_limit=512M
+  memory_limit=3072M
 
   CAKE="$PATH_TO_MISP/app/Console/cake"
 

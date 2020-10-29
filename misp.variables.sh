@@ -4,7 +4,7 @@ export MISP_PASSWORD="$(openssl rand -hex 32)"
 export PATH_TO_MISP='/var/www/MISP'
 export WWW_USER='apache'
 export FQDN="misp.local"
-export MISP_BASEURL=''
+export MISP_BASEURL='https://misp.local'
 export MISP_LIVE='1'
 export DBHOST='localhost'
 export DBNAME='misp'
@@ -27,10 +27,10 @@ export GPG_KEY_LENGTH='3072'
 export GPG_PASSPHRASE="$(openssl rand -hex 32)"
 alias debug="echo -e"
 alias checkAptLock="echo 'Function used in Installer to make sure apt is not locked'"
-export upload_max_filesize=50M
-export post_max_size=50M
+export upload_max_filesize=100M
+export post_max_size=100M
 export max_execution_time=300
-export memory_limit=512M
+export memory_limit=3072M
 export CAKE="$PATH_TO_MISP/app/Console/cake"
 echo "Misp User: $MISP_USER"
 echo "Misp User Password: $MISP_PASSWORD"

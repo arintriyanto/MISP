@@ -145,6 +145,8 @@ yumInstallCoreDeps () {
                    rh-php72-php-mysqlnd \
                    rh-php72-php-mbstring \
                    rh-php72-php-xml \
+                   rh-php72-php-intl \
+                   rh-php72-php-ssdeep \
                    rh-php72-php-bcmath \
                    rh-php72-php-opcache \
                    rh-php72-php-gd -y
@@ -305,7 +307,7 @@ installCake_RHEL ()
   sudo systemctl restart rh-php72-php-fpm.service
 
   # If you have not yet set a timezone in php.ini
-  echo 'date.timezone = "Asia/Tokyo"' |sudo tee /etc/opt/rh/rh-php72/php-fpm.d/timezone.ini
+  echo 'date.timezone = "Asia/Jakarta"' |sudo tee /etc/opt/rh/rh-php72/php-fpm.d/timezone.ini
   sudo ln -s ../php-fpm.d/timezone.ini /etc/opt/rh/rh-php72/php.d/99-timezone.ini
 
   # Recommended: Change some PHP settings in /etc/opt/rh/rh-php72/php.ini
