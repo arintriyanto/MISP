@@ -376,7 +376,7 @@ prepareDB_RHEL () {
   #if [[ ! -e /var/opt/rh/rh-mariadb102/lib/mysql/misp/users.ibd ]]; then
 
   # Add your credentials if needed, if sudo has NOPASS, comment out the relevant lines
-  pw="Password1234"
+  pw="0987890"
 
   expect -f - <<-EOF
     set timeout 10
