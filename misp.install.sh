@@ -86,11 +86,11 @@ MISPvars () {
   # checkAptLock alias to make sure people are not confused when blindly copy pasting blobs of code
   alias checkAptLock="echo 'Function used in Installer to make sure apt is not locked'"
 
-  # php.ini configuration
-  # upload_max_filesize=50M
-  # post_max_size=50M
-  # max_execution_time=300
-  # memory_limit=512M
+  php.ini configuration
+  upload_max_filesize=50M
+  post_max_size=50M
+  max_execution_time=300
+  memory_limit=4096M
 
   CAKE="$PATH_TO_MISP/app/Console/cake"
 
