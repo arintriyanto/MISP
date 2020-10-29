@@ -12,8 +12,6 @@ yumInstallCoreDeps () {
   # Enable and start redis
   sudo systemctl enable --now rh-redis32-redis.service
 
-  WWW_USER="apache"
-  SUDO_WWW="sudo -H -u $WWW_USER"
   RUN_PHP="/usr/bin/scl enable rh-php72"
   PHP_INI="/etc/opt/rh/rh-php72/php.ini"
   # Install PHP 7.2 from SCL, see https://www.softwarecollections.org/en/scls/rhscl/rh-php72/
