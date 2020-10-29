@@ -1,26 +1,5 @@
 #!/bin/bash
 
-# Main Install on RHEL function
-installMISPRHEL () {
-
-    debug "Installing System Dependencies"
-    yumInstallCoreDeps
-
-    debug "Enabling Haveged for additional entropy"
-    sudo yum install haveged -y
-    sudo systemctl enable --now haveged.service
-
-    debug "Installing MISP code"
-    installCoreRHEL
-    
-    debug "Install Cake PHP"
-    installCake_RHEL
-    
-    echo "Core Intallation finished, check on port 443 to see the Web UI"
-  fi
-}
-# End installMISPRHEL ()
-
 yumInstallCoreDeps () {
   # Install the dependencies:
   sudo yum install gcc git zip rh-git218 \
@@ -225,9 +204,24 @@ installCake_RHEL ()
 
 
 
-# If RHEL/CentOS is detected, run appropriate script
-if [[ "${FLAVOUR}" == "rhel" ]] || [[ "${FLAVOUR}" == "centos" ]]; then
-  installMISPRHEL
-  echo "Installation done !"
-  exit
-fi
+
+#### Start Exec ###
+
+# Enable ssh in firewall
+firewall-cmd --zone=public --add-port=22/tcp --permanent
+firewall-cmd --reload
+
+debug "Installing System Dependencies"
+yumInstallCoreDeps
+
+debug "Enabling Haveged for additional entropy"
+sudo yum install haveged -y
+sudo systemctl enable --now haveged.service
+
+debug "Installing MISP code"
+installCoreRHEL
+    
+debug "Install Cake PHP"
+installCake_RHEL
+
+echo "Core Intallation finished, check on port 443 to see the Web UI"
