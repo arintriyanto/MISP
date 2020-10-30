@@ -92,7 +92,7 @@ MISPvars () {
   upload_max_filesize=50M
   post_max_size=50M
   max_execution_time=300
-  memory_limit=4096M
+  memory_limit=2048M
 
   CAKE="$PATH_TO_MISP/app/Console/cake"
 
@@ -302,13 +302,15 @@ installCake_RHEL ()
 
   ## sudo yum install php-redis -y
   sudo scl enable rh-php72 'pecl channel-update pecl.php.net'
+
   sudo scl enable rh-php72 'yes no|pecl install redis'
   echo "extension=redis.so" |sudo tee /etc/opt/rh/rh-php72/php-fpm.d/redis.ini
   sudo ln -s /etc/opt/rh/rh-php72/php-fpm.d/redis.ini /etc/opt/rh/rh-php72/php.d/99-redis.ini
   
   sudo ln -s /usr/lib64/libfuzzy.so /usr/lib/libfuzzy.so
   sudo scl enable rh-php72 'pecl install ssdeep'
-  echo "extension=ssdeep.so" |sudo tee /etc/opt/rh/rh-php72/php.d/99-ssdeep.ini
+  echo "extension=ssdeep.so" |sudo tee /etc/opt/rh/rh-php72/php-fpm.d/ssdeep.ini
+  sudo ln -s /etc/opt/rh/rh-php72/php-fpm.d/ssdeep.ini /etc/opt/rh/rh-php72/php.d/99-ssdeep.ini
 
   # Install gnupg extension
   sudo yum install gpgme-devel -y

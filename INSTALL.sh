@@ -2202,6 +2202,7 @@ installCake_RHEL ()
   ## sudo yum install php-redis -y
   sudo scl enable rh-php72 'pecl channel-update pecl.php.net'
   sudo scl enable rh-php72 'yes no|pecl install redis'
+  #sudo scl enable rh-php72 'pecl install redis'
   echo "extension=redis.so" |sudo tee /etc/opt/rh/rh-php72/php.d/99-redis.ini
 
   sudo ln -s /usr/lib64/libfuzzy.so /usr/lib/libfuzzy.so
